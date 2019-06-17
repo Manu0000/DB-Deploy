@@ -47,10 +47,8 @@
                                         <path refid="h2.classpath" />
                                     </classpath>
                                     <fileset
-                                             file="${basedir}/src/main/resources/undo_tbl_create.sql" />
-                                             file="${basedir}/src/main/resources/createSchemaVersionTable.sql" />
-                                             file="${basedir}/src/main/resources/Insert_tbl.sql" />
-                                </sql>
+                                                 file="${basedir}/src/main/resources/createSchemaVersionTable.sql" />
+                                  </sql>
                                 <echo
                                     message="##################### END ########################" />
                             </tasks>

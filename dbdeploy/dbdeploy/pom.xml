@@ -1,113 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-    <groupId>com.dbdeploy.maven</groupId>
+    <groupId>com.sample.dbdeploy</groupId>
     <artifactId>dbdeploy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>dbdeploy</name>
-    <description>Demo project for Spring Boot</description>
-
-    <properties>
-        <java.version>8</java.version>
-        <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
-        <db.url>jdbc:oracle:thin:@//192.168.41.56:1521/devopsdb</db.url>
-        <db.user>testdevops</db.user>
-        <db.passwd>testdevops</db.passwd>
-        <db.schema>devopsdb</db.schema>
-      <!--  <mysql.connector.version>8.0.16</mysql.connector.version> !>
-    </properties>
+    <packaging>jar</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-<dependency>
-                                    <groupId>com.oracle</groupId>
-                                    <artifactId>ojdbc14</artifactId>
-                                    <version>10.2.0.4.0</version>
-                                </dependency>
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+            <dependency>
+                <groupId>com.oracle</groupId>
+                <artifactId>ojdbc14</artifactId>
+                <version>10.2.0.4.0</version>
+            </dependency>
+
     </dependencies>
+    <build>
 
-    <profiles>
-        <profile>
-
-            <id>dbdeploy</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.dbdeploy</groupId>
-                        <artifactId>maven-dbdeploy-plugin</artifactId>
+        <plugins>
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>create-db</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
 
                         <configuration>
-                            <outputfile>apply.sql</outputfile>
-                            <undoOutputfile>output.sql</undoOutputfile>
-                            <scriptdirectory>${project.basedir}\Desktop\DB Deploy Util</scriptdirectory>
-                            <driver>oracle.jdbc.driver.OracleDriver</driver>
-                            <url>jdbc:oracle:thin:@//192.168.41.56:1521/devopsdb</url>
-                            <userid>${db.user}</userid>
-                            <password>${db.passwd}</password>
-                            <dbms>mysql</dbms>
-                            <delimiter>;</delimiter>
-                            <delimiterType>row</delimiterType>
+                            <tasks>
+                                <path id="h2.classpath">
+                                    <path refid="maven.compile.classpath" />
+                                </path>
+                                <echo
+                                    message="########### Creating API Manager Database ##############" />
+                                <sql driver="oracle.jdbc.driver.OracleDriver"
+                                    url="jdbc:oracle:thin:@//192.168.41.56:1521/devopsdb"
+                                    userid="testdevops" password="testdevops" autocommit="true"
+                                    onerror="continue">
+                                    <classpath>
+                                        <path refid="h2.classpath" />
+                                    </classpath>
+                                    <fileset
+                                        file="${basedir}/src/main/resources/createSchemaVersionTable.sql" />
+                                </sql>
+                                <echo
+                                    message="##################### END ########################" />
+                            </tasks>
                         </configuration>
-                        <inherited>false</inherited>
-                        <dependencies>
-                            <dependency>
-                                <groupId>mysql</groupId>
-                                <artifactId>mysql-connector-java</artifactId>
-                                <version>${mysql.connector.version}</version>
-                            </dependency>
-                        </dependencies>
-                        <executions>
-                            <execution>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>db-scripts</goal>
-                                    <goal>update</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-
-                    </plugin>
-
-                </plugins>
-
-            </build>
-        </profile>
-
-    </profiles>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                    </execution>
+                </executions>
             </plugin>
+
+
         </plugins>
     </build>
-
 </project>

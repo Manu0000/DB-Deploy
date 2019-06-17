@@ -15,13 +15,13 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>11</java.version>
-        <db.driver>com.mysql.cj.jdbc.Driver</db.driver>
-        <db.url>jdbc:mysql://localhost:3306/dbdeploy</db.url>
-        <db.user>root</db.user>
-        <db.passwd>root</db.passwd>
-        <db.schema>dbdeploy</db.schema>
-        <mysql.connector.version>8.0.16</mysql.connector.version>
+        <java.version>8</java.version>
+        <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
+        <db.url>jdbc:oracle:thin:@//192.168.41.56:1521/devopsdb</db.url>
+        <db.user>testdevops</db.user>
+        <db.passwd>testdevops</db.passwd>
+        <db.schema>devopsdb</db.schema>
+      <!--  <mysql.connector.version>8.0.16</mysql.connector.version> !>
     </properties>
 
     <dependencies>
@@ -60,9 +60,9 @@
                         <configuration>
                             <outputfile>apply.sql</outputfile>
                             <undoOutputfile>output.sql</undoOutputfile>
-                            <scriptdirectory>${project.basedir}/target/classes/spring</scriptdirectory>
-                            <driver>com.mysql.jdbc.Driver</driver>
-                            <url>jdbc:mysql://localhost:3306/dbdeploy</url>
+                            <scriptdirectory>${project.basedir}\Desktop\DB Deploy Util</scriptdirectory>
+                            <driver>oracle.jdbc.driver.OracleDriver</driver>
+                            <url>jdbc:oracle:thin:@//192.168.41.56:1521/devopsdb</url>
                             <userid>${db.user}</userid>
                             <password>${db.passwd}</password>
                             <dbms>mysql</dbms>

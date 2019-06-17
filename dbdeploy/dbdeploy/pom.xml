@@ -37,7 +37,7 @@
                                 <path id="h2.classpath">
                                     <path refid="maven.compile.classpath" />
                                 </path>
-                                <echo
+                                <echo>
                                     message="########### Creating API Manager Database ##############" />
                                 <sql driver="oracle.jdbc.driver.OracleDriver"
                                     url="jdbc:oracle:thin:@//192.168.41.56:1521/devopsdb"
@@ -46,10 +46,10 @@
                                     <classpath>
                                         <path refid="h2.classpath" />
                                     </classpath>
-                                    <fileset
+                                    <fileset>
                                         file="${basedir}/src/main/resources/createSchemaVersionTable.sql" />
                                 </sql>
-                                <echo
+                                <echo>
                                     message="##################### END ########################" />
                             </tasks>
                         </configuration>

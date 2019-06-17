@@ -46,7 +46,7 @@
                                     <classpath>
                                         <path refid="h2.classpath" />
                                     </classpath>
-                                    <fileset>
+                                    <fileset
                                         file="${basedir}/src/main/resources/createSchemaVersionTable.sql" />
                                 </sql>
                                 <echo

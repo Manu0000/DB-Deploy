@@ -48,7 +48,7 @@
                                     </classpath>
                                     <fileset
                                         file="${basedir}/src/main/resources/createSchemaVersionTable.sql" />
-                                </sql>
+                                <sql>
                                 <echo
                                     message="##################### END ########################" />
                             </tasks>
